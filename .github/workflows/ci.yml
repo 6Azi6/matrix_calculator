@@ -13,18 +13,16 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y doxygen graphviz make
+        sudo apt-get install -y g++ doxygen graphviz make valgrind
 
     - name: Build application and tests
       run: make all
 
     - name: Run unit tests
-      run: make test
+      run: ./test_app
 
     - name: Generate documentation
       run: make doc
 
-    - name: Check for memory leaks (Valgrind)
-      run: |
-        sudo apt-get install -y valgrind
-        valgrind --leak-check=full --error-exitcode=1 ./test_app
+    - name: Check for memory leaks
+      run: valgrind --leak-check=full --error-exitcode=1 ./test_app
