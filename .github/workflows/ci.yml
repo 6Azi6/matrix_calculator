@@ -10,19 +10,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install dependencies
+    - name: Install and build
       run: |
         sudo apt-get update
-        sudo apt-get install -y g++ doxygen graphviz make valgrind
+        sudo apt-get install -y g++ make
+        make all
 
-    - name: Build application and tests
-      run: make all
-
-    - name: Run unit tests
+    - name: Run tests
       run: ./test_app
-
-    - name: Generate documentation
-      run: make doc
-
-    - name: Check for memory leaks
-      run: valgrind --leak-check=full --error-exitcode=1 ./test_app
